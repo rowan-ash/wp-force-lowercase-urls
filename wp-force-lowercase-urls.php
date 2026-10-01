@@ -3,7 +3,7 @@
  * Plugin Name:     WP Force Lowercase URLs
  * Plugin URI:      https://github.com/joshbuchea/wp-force-lowercase-urls/
  * Description:     Redirect uppercase URLs to lowercase.
- * Version:         2.1.0
+ * Version:         2.1.1
  * Author:          Josh Buchea
  * Author URI:      http://joshbuchea.com/
  * Text Domain:     wp-force-lowercase-urls
@@ -34,7 +34,10 @@ if ( !class_exists('WPForceLowercaseURLs') ) {
     public static function toLower() {
 
       // Grab requested URL
-      $url = $_SERVER['REQUEST_URI'];
+      $url = (isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '');
+      if ( $url === '' ) {
+        return;
+      }
       $params = (isset($_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : '');
 
       // If URL contains a period, halt (likely contains a filename and filenames are case specific)
